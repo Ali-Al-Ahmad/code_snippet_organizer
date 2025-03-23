@@ -3,6 +3,9 @@ import axiosInstance from '../../utils/AxiosInstance'
 import './Home.css'
 import EditIcon from '../../assets/edit.svg'
 import DeleteIcon from '../../assets/trash-solid.svg'
+import IsFavorite from '../../assets/star-gold.svg'
+import NotFavorite from '../../assets/star-grey.svg'
+
 import { useNavigate } from 'react-router-dom'
 
 const TagDropdown = ({ allTags, selectedTags, handleTagChange }) => {
@@ -42,7 +45,12 @@ const TagDropdown = ({ allTags, selectedTags, handleTagChange }) => {
   )
 }
 
-const SnippetCard = ({ snippet, handleDeleteSnippet, handleEditSnippet }) => (
+const SnippetCard = ({
+  snippet,
+  handleDeleteSnippet,
+  handleEditSnippet,
+  handleFavorite,
+}) => (
   <div className='snippet-card'>
     <pre className='code-block'>
       <code>{snippet.content}</code>
@@ -62,16 +70,22 @@ const SnippetCard = ({ snippet, handleDeleteSnippet, handleEditSnippet }) => (
       </div>
       <div className='action-buttons'>
         <img
+          className='favorite-icon'
+          src={snippet.isFavorite ? IsFavorite : NotFavorite}
+          onClick={() => handleFavorite(snippet)}
+          alt=''
+        />
+        <img
           className='edit-icon'
           src={EditIcon}
-          onClick={(e) => handleEditSnippet(snippet)}
+          onClick={() => handleEditSnippet(snippet)}
           alt=''
         />
 
         <img
           className='delete-icon'
           src={DeleteIcon}
-          onClick={(e) => handleDeleteSnippet(snippet?.id)}
+          onClick={() => handleDeleteSnippet(snippet?.id)}
           alt=''
         />
       </div>
@@ -155,6 +169,22 @@ const Home = ({ search }) => {
       console.error(error)
     }
   }
+  const handleFavorite = async (snippet) => {
+    try {
+      setSnippets((prevSnippets) =>
+        prevSnippets.map((s) =>
+          s.id === snippet.id ? { ...s, isFavorite: !s.isFavorite } : s
+        )
+      )
+      const response = await axiosInstance.post(`/snippets/editsnippet/`, {
+        id: snippet.id,
+        isFavorite: !snippet.isFavorite,
+      })
+      console.log(response)
+    } catch (error) {
+      console.error(error)
+    }
+  }
 
   return (
     <div className='container'>
@@ -175,6 +205,7 @@ const Home = ({ search }) => {
               snippet={snippet}
               handleDeleteSnippet={handleDeleteSnippet}
               handleEditSnippet={handleEditSnippet}
+              handleFavorite={handleFavorite}
             />
           ))
         ) : (

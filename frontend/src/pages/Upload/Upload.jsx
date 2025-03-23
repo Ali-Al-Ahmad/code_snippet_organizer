@@ -31,20 +31,24 @@ const Upload = () => {
     }
 
     try {
+      let response
+
       if (snippetId) {
         newSnippet.id = snippetId
-        const response = await axiosInstance.post(
+        response = await axiosInstance.post(
           `/snippets/editsnippet/`,
           newSnippet
         )
+        console.log("resppedit,",response);
       } else {
-        const response = await axiosInstance.post(
-          '/snippets/addsnippet',
-          newSnippet
-        )
+        response = await axiosInstance.post('/snippets/addsnippet', newSnippet)
+                console.log('respADd,', response)
+
       }
-      navigate('/home')
-      toast.success(response?.data?.message)
+      if (response?.data?.success) {
+        navigate('/home')
+        toast.success(response?.data?.message)
+      }
     } catch (error) {
       toast.error(error.response?.data?.message)
     }

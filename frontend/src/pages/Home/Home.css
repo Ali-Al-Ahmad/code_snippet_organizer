@@ -133,4 +133,5 @@
 .action-buttons img {
   width: 20px;
   margin-left: 10px;
+  cursor: pointer;
 }

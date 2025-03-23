@@ -38,7 +38,7 @@ const Signup = () => {
 
       navigate('/home')
     } catch (err) {
-      toast.error(`Signup failed! ${err.message}`)
+      toast.error(err.response?.data?.message)
     }
   }
 

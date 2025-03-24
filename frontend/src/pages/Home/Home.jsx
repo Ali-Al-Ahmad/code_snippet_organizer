@@ -176,7 +176,7 @@ const Home = ({ search }) => {
           s.id === snippet.id ? { ...s, isFavorite: !s.isFavorite } : s
         )
       )
-      const response = await axiosInstance.post(`/snippets/editsnippet/`, {
+      const response = await axiosInstance.post(`/snippets/editsnippet`, {
         id: snippet.id,
         isFavorite: !snippet.isFavorite,
       })

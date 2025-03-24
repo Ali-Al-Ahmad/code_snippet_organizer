@@ -13,7 +13,7 @@ return new class extends Migration {
         Schema::create('snippets', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->string('content');
+            $table->longText('content');
             $table->string('language');
             $table->string('keywords');
             $table->boolean('isFavorite')->default(false);

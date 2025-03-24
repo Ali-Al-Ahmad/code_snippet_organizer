@@ -92,6 +92,7 @@ const Upload = () => {
             onChange={(e) => setKeywords(e.target.value)}
             className='input-field'
             placeholder='snippet keywords'
+            required
           />
         </div>
 
@@ -103,6 +104,7 @@ const Upload = () => {
             onChange={(e) => setTags(e.target.value)}
             className='input-field'
             placeholder='snippet tags'
+            required
           />
         </div>
 

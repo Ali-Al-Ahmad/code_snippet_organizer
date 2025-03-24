@@ -5,6 +5,7 @@ const axiosInstance = axios.create({
     'Content-Type': 'application/json',
   },
 })
+//localhost
 
 axiosInstance.interceptors.request.use(
   (config) => {

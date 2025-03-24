@@ -110,9 +110,11 @@ class SnippetController extends Controller
 
             $snippet->save();
 
-            $tags = collect($request["tags"])->map(fn($tag) => Tag::firstOrCreate(['name' => $tag])->id);
+            if ($request->has('tags')) {
+                $tags = collect($request["tags"])->map(fn($tag) => Tag::firstOrCreate(['name' => $tag])->id);
 
             $snippet->tags()->sync($tags);
+            }
 
 
             return responseMessage(

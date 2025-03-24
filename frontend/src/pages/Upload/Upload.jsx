@@ -36,7 +36,7 @@ const Upload = () => {
       if (snippetId) {
         newSnippet.id = snippetId
         response = await axiosInstance.post(
-          `/snippets/editsnippet/`,
+          `/snippets/editsnippet`,
           newSnippet
         )
         console.log("resppedit,",response);
